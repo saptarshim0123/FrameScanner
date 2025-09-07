@@ -1,0 +1,93 @@
+body {
+    background-color: #000000 !important;
+}
+
+.navbar {
+    background-color: #000000 !important;
+    font-family: 'Press Start 2P', cursive;
+    border-bottom: 5px solid #00FF41 !important;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00FF41 !important;
+}
+
+#upload-section {
+    min-height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.upload-zone {
+    width: 600px;
+    height: 300px;
+    border: 3px dashed #00FF41;
+    border-radius: 20px;
+    background-color: #111111;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.upload-zone:hover {
+    background-color: #001a00;
+    border-color: #00CC33;
+    transform: scale(1.05);
+}
+
+.upload-zone h3 {
+    color: #00FF41;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.upload-zone p {
+    color: #00CC33;
+    font-size: 10px;
+    margin: 0;
+    padding: 0.3rem;
+}
+
+.camera-icon {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #00FF41;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+    background-color: #001a00;
+}
+
+.camera-icon::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background-color: #00FF41;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.camera-icon::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.upload-zone * {
+    pointer-events: none;
+}

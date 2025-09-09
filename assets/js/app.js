@@ -10,6 +10,37 @@ document.addEventListener('DOMContentLoaded', function () {
     const replaceZone = document.querySelector(".replace-button");
     const slider = document.getElementById('confidence-slider');
     const sliderValue = document.getElementById('slider-value');
+    const metaViewer = document.getElementById('data');
+
+    // Functions
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function formatDuration(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+
+        if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        return `${minutes}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function videoMetadata(video, file) {
+        metaViewer.innerHTML = `
+            <p><strong>Name:</strong> ${file.name}</p>
+            <p><strong>Size:</strong> ${formatFileSize(file.size)}</p>
+            <p><strong>Type:</strong> ${file.type}</p>
+            <p><strong>Duration:</strong> ${formatDuration(video.duration)}</p>
+            <p><strong>Dimensions:</strong> ${video.videoWidth} x ${video.videoHeight}</p>
+        `;
+    }
 
     // Slider interaction
     slider.addEventListener('input', () => {
@@ -25,10 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     replaceZone.addEventListener('click', function (event) {
-        if (!replaceZone.querySelector('video')) {
             console.log('> OPENING FILE BROWSER...');
             fileInput.click();
-        }
     });
 
     // Handles file selection
@@ -47,9 +76,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         Your browser does not support the video tag!
                     </video>
                 </div>
-                `;
+                `
+
+            const video = uploadZone.querySelector('video');
+
+            video.addEventListener('loadedmetadata', () => {
+                videoMetadata(video, file)
+            });
         }
     });
+
+
 
     console.log('> UPLOAD SYSTEM ACTIVE');
 });

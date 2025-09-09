@@ -10,9 +10,13 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=camera" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -51,6 +55,12 @@
                     <input id="confidence-slider" class="slider" type="range" min="0" max="1" step="0.1">
                     <p>Confidence: <span id="slider-value">0.5</span></p>
                 </div>
+            </div>
+        </section>
+        <section id="metadata-viewer" class="container-fluid">
+            <div class="metadata">  
+                <p><img src="./assets/icons/code.png" width="30px" height="auto" style="padding-right: 5px;" alt="">METADATA:</p>
+                <div id="data"><p>No video loaded.</p></div>
             </div>
         </section>
     </main>

@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Get elements
     const uploadZone = document.querySelector('.upload-zone');
-    const fileInputs = [document.getElementById("video-input"), document.getElementById("replace-video-input")];
+    const fileInput = document.getElementById("video-input");
+    const replaceZone = document.querySelector(".replace-button");
     const slider = document.getElementById('confidence-slider');
     const sliderValue = document.getElementById('slider-value');
 
@@ -19,21 +20,27 @@ document.addEventListener('DOMContentLoaded', function () {
     uploadZone.addEventListener('click', function (event) {
         if (!uploadZone.querySelector('video')) {
             console.log('> OPENING FILE BROWSER...');
-            fileInputs[0].click();
+            fileInput.click();
+        }
+    });
+
+    replaceZone.addEventListener('click', function (event) {
+        if (!replaceZone.querySelector('video')) {
+            console.log('> OPENING FILE BROWSER...');
+            fileInput.click();
         }
     });
 
     // Handles file selection
-    fileInputs.forEach(input => {
-        input.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                console.log('> VIDEO SELECTED:', file.name);
-                console.log('> FILE SIZE:', (file.size / 1024 / 1024).toFixed(2) + ' MB');
-                console.log('> FILE TYPE:', file.type);
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log('> VIDEO SELECTED:', file.name);
+            console.log('> FILE SIZE:', (file.size / 1024 / 1024).toFixed(2) + ' MB');
+            console.log('> FILE TYPE:', file.type);
 
-                // Morph upload zone into video player
-                uploadZone.innerHTML = `
+            // Morph upload zone into video player
+            uploadZone.innerHTML = `
                 <div class="video-wrapper" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                     <video controls class="video-player">
                         <source src="${URL.createObjectURL(file)}" type="${file.type}">
@@ -41,15 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     </video>
                 </div>
                 `;
-
-                // Hooking the replace button
-                const replaceBtn = uploadZone.querySelector('.replace-btn');
-                replaceBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // For preventing event bubbling
-                    fileInputs[1].click();
-                });
-            }
-        });
+        }
     });
 
     console.log('> UPLOAD SYSTEM ACTIVE');

@@ -6,28 +6,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Get elements
     const uploadZone = document.querySelector('.upload-zone');
-    const fileInput = document.getElementById('video-input');
+    const fileInputs = [document.getElementById("video-input"), document.getElementById("replace-video-input")];
+    const slider = document.getElementById('confidence-slider');
+    const sliderValue = document.getElementById('slider-value');
+
+    // Slider interaction
+    slider.addEventListener('input', () => {
+        sliderValue.textContent = slider.value;
+    });
 
     // Makes the upload zone clickable
     uploadZone.addEventListener('click', function (event) {
+        if (!uploadZone.querySelector('video')) {
             console.log('> OPENING FILE BROWSER...');
-            fileInput.click();
+            fileInputs[0].click();
+        }
     });
 
     // Handles file selection
-    fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            console.log('> VIDEO SELECTED:', file.name);
-            console.log('> FILE SIZE:', (file.size / 1024 / 1024).toFixed(2) + ' MB');
-            console.log('> FILE TYPE:', file.type);
+    fileInputs.forEach(input => {
+        input.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                console.log('> VIDEO SELECTED:', file.name);
+                console.log('> FILE SIZE:', (file.size / 1024 / 1024).toFixed(2) + ' MB');
+                console.log('> FILE TYPE:', file.type);
 
-            // Update upload zone text
-            const h3 = uploadZone.querySelector('h3');
-            const p = uploadZone.querySelector('p');
-            h3.textContent = file.name;
-            p.textContent = 'Ready for analysis!';
-        }
+                // Morph upload zone into video player
+                uploadZone.innerHTML = `
+                <div class="video-wrapper" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                    <video controls class="video-player">
+                        <source src="${URL.createObjectURL(file)}" type="${file.type}">
+                        Your browser does not support the video tag!
+                    </video>
+                </div>
+                `;
+
+                // Hooking the replace button
+                const replaceBtn = uploadZone.querySelector('.replace-btn');
+                replaceBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // For preventing event bubbling
+                    fileInputs[1].click();
+                });
+            }
+        });
     });
 
     console.log('> UPLOAD SYSTEM ACTIVE');

@@ -69,7 +69,6 @@ FUNCTIONAL FEATURES:
 
 TECHNICAL DEBT:
 - Minor console log duplication (functional, cosmetic issue only)
-- Camera icon border color (white instead of green - line 86 CSS)
 - Navigation links are placeholder (need app-specific links)
 
 =====================================
